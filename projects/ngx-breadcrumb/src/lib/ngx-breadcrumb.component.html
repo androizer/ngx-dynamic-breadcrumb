@@ -1,0 +1,37 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  class="ngx-breadcrumb-container"
+>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li
+        class="breadcrumb-item"
+        *ngFor="let breadcrumb of breadcrumbs; last as isLast; first as isFirst"
+      >
+        <ng-container
+          [ngTemplateOutlet]="breadcrumbTemplate || defaultTemplate"
+          [ngTemplateOutletContext]="{
+            breadcrumbArr: breadcrumbs,
+            breadcrumb: breadcrumb,
+            isLast: isLast,
+            isFirst: isFirst
+          }"
+        ></ng-container>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<ng-template #defaultTemplate let-breadcrumb="breadcrumb" let-isLast="isLast">
+  <ng-container *ngIf="breadcrumb.label">
+    <a
+      href="javascript:void(0)"
+      *ngIf="breadcrumb.isClickable"
+      (click)="navigateTo(breadcrumb.url)"
+    >
+      {{ breadcrumb.label }}
+    </a>
+    <span *ngIf="!isLast" class="breadcrumb-separator">/</span>
+  </ng-container>
+</ng-template>

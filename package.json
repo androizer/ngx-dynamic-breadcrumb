@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -18,11 +19,13 @@
     "@angular/platform-browser": "~11.2.5",
     "@angular/platform-browser-dynamic": "~11.2.5",
     "@angular/router": "~11.2.5",
+    "ngx-breadcrumb": "file:dist/ngx-breadcrumb",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.1102.3",
     "@angular/cli": "~11.2.4",
     "@angular/compiler-cli": "~11.2.5",
     "@types/jasmine": "~3.6.0",
@@ -35,6 +38,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^11.0.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",

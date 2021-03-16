@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { IBreadcrumb, IReplaceBreadcrumb } from './ngx-breadcrumb.types';
@@ -16,7 +16,7 @@ export class NgxBreadcrumbService {
 
   private breadcrumbs: IBreadcrumb[] = [];
 
-  private readonly _breadcrumbUpdate$ = new Subject<IBreadcrumb[]>();
+  private readonly _breadcrumbUpdate$ = new BehaviorSubject<IBreadcrumb[]>([]);
 
   /**
    * Emit change when the breadcrumbs are changed.
@@ -28,7 +28,7 @@ export class NgxBreadcrumbService {
    * If the label is null while replacing, it will act
    * as delete breadcrumb from UI.
    */
-  readonly breadcrumbReplace$ = new Subject<IReplaceBreadcrumb[]>();
+  readonly breadcrumbReplace$ = new BehaviorSubject<IReplaceBreadcrumb[]>([]);
 
   /**
    * Recursively build breadcrumb according to activated route.
@@ -52,14 +52,12 @@ export class NgxBreadcrumbService {
     } else if (typeof currentBreadcrumb === 'string') {
       key = label = currentBreadcrumb;
     }
-    let path = currentBreadcrumb ? route.routeConfig?.path : '';
+    let path = route.routeConfig?.path ?? '';
 
     // If the route is dynamic route such as ':id', replace it with actual param values
-    const dynamicRouteParts = path!
-      .split('/')
-      .filter((el) => el.startsWith(':'));
-    if (dynamicRouteParts.length && !!route.snapshot) {
-      dynamicRouteParts.forEach((item) => {
+    const dynamicRoutes = path!.split('/').filter((el) => el.startsWith(':'));
+    if (dynamicRoutes.length && !!route.snapshot) {
+      dynamicRoutes.forEach((item) => {
         const paramName = item.split(':')[1];
         path = path!.replace(item, route.snapshot.params[paramName]);
       });

@@ -5,33 +5,32 @@
 >
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li
-        class="breadcrumb-item"
+      <ng-container
         *ngFor="let breadcrumb of breadcrumbs; last as isLast; first as isFirst"
       >
-        <ng-container
-          [ngTemplateOutlet]="breadcrumbTemplate || defaultTemplate"
-          [ngTemplateOutletContext]="{
-            breadcrumbArr: breadcrumbs,
-            breadcrumb: breadcrumb,
-            isLast: isLast,
-            isFirst: isFirst
-          }"
-        ></ng-container>
-      </li>
+        <li *ngIf="breadcrumb.label" class="breadcrumb-item">
+          <ng-container
+            [ngTemplateOutlet]="breadcrumbTemplate || defaultTemplate"
+            [ngTemplateOutletContext]="{
+              breadcrumbArr: breadcrumbs,
+              breadcrumb: breadcrumb,
+              isLast: isLast,
+              isFirst: isFirst
+            }"
+          ></ng-container>
+        </li>
+      </ng-container>
     </ol>
   </nav>
 </div>
 
 <ng-template #defaultTemplate let-breadcrumb="breadcrumb" let-isLast="isLast">
-  <ng-container *ngIf="breadcrumb.label">
-    <a
-      href="javascript:void(0)"
-      *ngIf="breadcrumb.isClickable"
-      (click)="navigateTo(breadcrumb.url)"
-    >
-      {{ breadcrumb.label }}
-    </a>
-    <span *ngIf="!isLast" class="breadcrumb-separator">/</span>
-  </ng-container>
+  <a
+    href="javascript:void(0)"
+    *ngIf="breadcrumb.isClickable"
+    (click)="navigateTo(breadcrumb.url)"
+  >
+    {{ breadcrumb.label }}
+  </a>
+  <span *ngIf="!isLast" class="breadcrumb-separator">/</span>
 </ng-template>

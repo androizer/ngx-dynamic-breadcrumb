@@ -50,9 +50,9 @@ export class NgxBreadcrumbService {
       label = currentBreadcrumb?.label;
       isClickable = currentBreadcrumb?.isClickable ?? isClickable;
     } else if (typeof currentBreadcrumb === 'string') {
-      label = currentBreadcrumb;
+      key = label = currentBreadcrumb;
     }
-    let path = route.routeConfig?.data ? route.routeConfig.path : '';
+    let path = currentBreadcrumb ? route.routeConfig?.path : '';
 
     // If the route is dynamic route such as ':id', replace it with actual param values
     const dynamicRouteParts = path!

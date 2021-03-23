@@ -9,6 +9,7 @@
     "tslib": "^2.0.0"
   },
   "license": "MIT",
+  "keywords": ["breadcrumbs", "angular", "ngx-dynamic-breadcrumb", "angular-6+", "dynamic-breadcrumb"],
   "repository": {
     "type": "git",
     "url": "https://github.com/androizer/ngx-dynamic-breadcrumb.git"

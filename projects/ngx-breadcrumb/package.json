@@ -10,6 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/androizer/ngx-dynamic-breadcrumb.git"
+    "url": "https://github.com/androizer/ngx-dynamic-breadcrumb.git",
+    "directory": "https://github.com/androizer/ngx-dynamic-breadcrumb/tree/master/projects/ngx-breadcrumb"
   }
 }

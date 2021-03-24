@@ -33,22 +33,8 @@ export class NgxBreadcrumbComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._subscriptions.push(
-      this.service.breadcrumbUpdate$.subscribe((crumbs) => {
+      this.service.breadcrumbChanges.subscribe((crumbs) => {
         this.breadcrumbs = crumbs;
-        this.cdr.detectChanges();
-      }),
-      this.service.breadcrumbReplace$.subscribe((crumb) => {
-        crumb.forEach((item) => {
-          const data = this.breadcrumbs.find(
-            (breadcrumb) => breadcrumb.key === item.key
-          );
-          if (data) {
-            data.label = item.newLabel;
-            data.url = Array.isArray(item.newUrl)
-              ? item.newUrl.join('/')
-              : item.newUrl ?? data.url;
-          }
-        });
         this.cdr.detectChanges();
       })
     );

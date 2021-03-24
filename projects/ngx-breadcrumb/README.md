@@ -1,27 +1,29 @@
 # Angular Dynamic Breadcrumb
+
 ## Installation
+
 ```shell
 npm install ngx-dynamic-breadcrumb
 ```
+
 ### 1. Import the `NgxBreadcrumbModule`
 
 Import `NgxBreadcrumbModule` in the `NgModule` of your application's root module.
+
 ```typescript
-import {BrowserModule} from "@angular/platform-browser";
-import {NgModule} from '@angular/core';
-import {NgxBreadcrumbModule} from 'angular-crumbs';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { NgxBreadcrumbModule } from "ngx-dynamic-breadcrumb";
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        NgxBreadcrumbModule,
-    ],
-    bootstrap: [AppComponent],
+  imports: [BrowserModule, NgxBreadcrumbModule],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
 ```
 
 ### 2. Set breadcrumbs in `app.routes`
+
 ```typescript
 export const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -36,14 +38,17 @@ export const routes: Routes = [
     },
 ];
 ```
+
 > Note: If breadcrumb is supplied as string, then the string value acts as `key` & `label` for that particular breadcrumb.
 
 ### 3. Add `<ngx-breadcrumb></ngx-breadcrumb>` tag in template of your application component.
 
-
 # Customization
-## Template  Customization
+
+## Template Customization
+
 ### You can BYO template using the breadcrumb's ng-content transclude.
+
 ```typescript
 <ngx-breadcrumb class="ngx-dynamic-breadcrumb">
   <ng-content let-breadcrumb let-isLast let-breadcrumbs>
@@ -65,31 +70,34 @@ export const routes: Routes = [
 ```
 
 ## Dynamic Breadcrumbs
+
 Use `NgxBreadcrumbService` to edit/replace the breadcrumb per route object dynamically
+
 #### 1. Edit/replace the breadcrumb
+
 ```typescript
 ngOnInit(): void {
   ...
   this.getServiceDetails(this.serviceId).subscribe(repoDetails => {
         ...
-        this.breadcrumbService.breadcrumbReplace$.next({
+        this.breadcrumbService.editBreadcrumbs({
           key: 'keyToObject',
           newLabel: 'New Label',
           newUrl: 'New URL value (optional)', // Provide this option only when needs to update url.
         });
-
   });
   ...
 }
 ```
 
 ### 2. Restrict a particular breadcrumb to render onto the UI by providing `newLabel` as `null` value.
+
 ```typescript
 ngOnInit(): void {
-  ...      
+  ...
   this.getServiceDetails(this.serviceId).subscribe(repoDetails => {
         ...
-        this.breadcrumbService.breadcrumbReplace$.next({
+        this.breadcrumbService.editBreadcrumbs({
           key: 'keyToObject',
           newLabel: null, // this will remove breadcrumb from UI.
         });
@@ -99,5 +107,24 @@ ngOnInit(): void {
 }
 ```
 
+# Miscellaneous
+
+## Subscribing to breadcrumb changes (optional)
+
+```typescript
+constructor(private readonly breadcrumbService: NgxBreadcrumbService) {}
+
+ngOnInit(): void {
+  ...
+  this.breadcrumbService.breadcrumbChanges.subscribe((crumbs: IBreadcrumb[]) => {
+        ...
+        this.breadcrumbs = crumbs;
+        ...
+  });
+  ...
+}
+```
+
 # License
+
 [MIT](/projects/ngx-breadcrumb/LICENSE)

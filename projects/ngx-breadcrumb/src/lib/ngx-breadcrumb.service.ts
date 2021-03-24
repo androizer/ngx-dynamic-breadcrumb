@@ -16,19 +16,12 @@ export class NgxBreadcrumbService {
 
   private breadcrumbs: IBreadcrumb[] = [];
 
-  private readonly _breadcrumbUpdate$ = new BehaviorSubject<IBreadcrumb[]>([]);
+  private readonly _breadcrumbChanges = new BehaviorSubject<IBreadcrumb[]>([]);
 
   /**
    * Emit change when the breadcrumbs are changed.
    */
-  readonly breadcrumbUpdate$ = this._breadcrumbUpdate$.asObservable();
-
-  /**
-   * Replace the breadcrumb label and url dynamically.
-   * If the label is null while replacing, it will act
-   * as delete breadcrumb from UI.
-   */
-  readonly breadcrumbReplace$ = new BehaviorSubject<IReplaceBreadcrumb[]>([]);
+  readonly breadcrumbChanges = this._breadcrumbChanges.asObservable();
 
   /**
    * Recursively build breadcrumb according to activated route.
@@ -89,13 +82,34 @@ export class NgxBreadcrumbService {
     return newBreadcrumbs;
   }
 
+  /**
+   * Edit the breadcrumb label and url dynamically.
+   * If the label is null while editing, it will act
+   * as delete breadcrumb from UI.
+   * @param {Array} crumbs IReplaceBreadcrumb[]
+   */
+  editBreadcrumbs(crumbs: IReplaceBreadcrumb[]): void {
+    crumbs.forEach((item) => {
+      const data = this.breadcrumbs.find(
+        (breadcrumb) => breadcrumb.key === item.key
+      );
+      if (data) {
+        data.label = item.newLabel;
+        data.url = Array.isArray(item.newUrl)
+          ? item.newUrl.join('/')
+          : item.newUrl ?? data.url;
+      }
+    });
+    this._breadcrumbChanges.next([...this.breadcrumbs]);
+  }
+
   // private functions
   private _subscribeToRouteEvent() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-        this._breadcrumbUpdate$.next(this.breadcrumbs);
+        this._breadcrumbChanges.next(this.breadcrumbs);
       });
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "ngx-dynamic-breadcrumb",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "peerDependencies": {
     "@angular/common": "^11.2.5",
     "@angular/core": "^11.2.5"
@@ -9,7 +9,13 @@
     "tslib": "^2.0.0"
   },
   "license": "MIT",
-  "keywords": ["breadcrumbs", "angular", "ngx-dynamic-breadcrumb", "angular-6+", "dynamic-breadcrumb"],
+  "keywords": [
+    "breadcrumbs",
+    "angular",
+    "ngx-dynamic-breadcrumb",
+    "angular-6+",
+    "dynamic-breadcrumb"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/androizer/ngx-dynamic-breadcrumb.git"

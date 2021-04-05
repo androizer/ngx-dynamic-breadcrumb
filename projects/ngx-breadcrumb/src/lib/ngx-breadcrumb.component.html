@@ -6,13 +6,17 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <ng-container
-        *ngFor="let breadcrumb of breadcrumbs; last as isLast; first as isFirst"
+        *ngFor="
+          let breadcrumb of breadcrumbs$ | async;
+          last as isLast;
+          first as isFirst
+        "
       >
         <li *ngIf="breadcrumb.label" class="breadcrumb-item">
           <ng-container
             [ngTemplateOutlet]="breadcrumbTemplate || defaultTemplate"
             [ngTemplateOutletContext]="{
-              breadcrumbArr: breadcrumbs,
+              breadcrumbArr: (breadcrumbs$ | async),
               breadcrumb: breadcrumb,
               isLast: isLast,
               isFirst: isFirst

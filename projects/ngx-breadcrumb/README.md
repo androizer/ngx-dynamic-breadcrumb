@@ -125,6 +125,20 @@ ngOnInit(): void {
 }
 ```
 
+## Get current breadcrumbs
+
+```typescript
+constructor(private readonly breadcrumbService: NgxBreadcrumbService) {}
+
+breadcrumbs: IBreadcrumb[] = [];
+
+ngOnInit(): void {
+  ...
+  this.breadcrumbs = this.breadcrumbService.getBreadcrumbs();
+  ...
+}
+```
+
 # License
 
 [MIT](/projects/ngx-breadcrumb/LICENSE)

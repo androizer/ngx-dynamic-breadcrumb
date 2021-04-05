@@ -1,16 +1,15 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
-  OnDestroy,
   OnInit,
   TemplateRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { IBreadcrumb } from './ngx-breadcrumb.types';
+import { Observable, of } from 'rxjs';
+
 import { NgxBreadcrumbService } from './ngx-breadcrumb.service';
+import { IBreadcrumb } from './ngx-breadcrumb.types';
 
 @Component({
   selector: 'ngx-breadcrumb',
@@ -18,33 +17,22 @@ import { NgxBreadcrumbService } from './ngx-breadcrumb.service';
   styleUrls: ['./ngx-breadcrumb.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxBreadcrumbComponent implements OnInit, OnDestroy {
+export class NgxBreadcrumbComponent implements OnInit {
   constructor(
     private readonly router: Router,
-    private readonly cdr: ChangeDetectorRef,
     private readonly service: NgxBreadcrumbService
   ) {}
 
   @Input()
   breadcrumbTemplate: TemplateRef<IBreadcrumb> | null = null;
 
-  breadcrumbs: IBreadcrumb[] = [];
-  private _subscriptions: Subscription[] = [];
+  breadcrumbs$: Observable<IBreadcrumb[]> | null = null;
 
   ngOnInit(): void {
-    this._subscriptions.push(
-      this.service.breadcrumbChanges.subscribe((crumbs) => {
-        this.breadcrumbs = crumbs;
-        this.cdr.detectChanges();
-      })
-    );
+    this.breadcrumbs$ = this.service.breadcrumbChanges;
   }
 
   navigateTo(path: string) {
     this.router.navigate([path]);
-  }
-
-  ngOnDestroy(): void {
-    this._subscriptions.forEach((subs) => subs.unsubscribe());
   }
 }

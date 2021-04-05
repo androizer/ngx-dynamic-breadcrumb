@@ -83,6 +83,14 @@ export class NgxBreadcrumbService {
   }
 
   /**
+   * Returns the latest array of breadcrumbs.
+   * @returns Array of breadcrumbs
+   */
+  public getBreadcrumbs(): IBreadcrumb[] {
+    return this._breadcrumbChanges.getValue();
+  }
+
+  /**
    * Edit the breadcrumb label and url dynamically.
    * If the label is null while editing, it will act
    * as delete breadcrumb from UI.

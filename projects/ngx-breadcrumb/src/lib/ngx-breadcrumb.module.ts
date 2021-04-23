@@ -1,13 +1,21 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { NgxBreadcrumbComponent } from './ngx-breadcrumb.component';
 import { NgxBreadcrumbService } from './ngx-breadcrumb.service';
 
 @NgModule({
   declarations: [NgxBreadcrumbComponent],
-  imports: [BrowserModule],
+  imports: [CommonModule, RouterModule],
   providers: [NgxBreadcrumbService],
   exports: [NgxBreadcrumbComponent],
 })
-export class NgxBreadcrumbModule {}
+export class NgxBreadcrumbModule {
+  public static forRoot(): ModuleWithProviders<NgxBreadcrumbModule> {
+    return {
+      ngModule: NgxBreadcrumbModule,
+      providers: [NgxBreadcrumbService],
+    };
+  }
+}

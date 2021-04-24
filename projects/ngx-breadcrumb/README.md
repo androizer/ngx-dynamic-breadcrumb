@@ -47,26 +47,27 @@ export const routes: Routes = [
 
 ## Template Customization
 
-### You can BYO template using the breadcrumb's ng-content transclude.
+### You can BYO template using the breadcrumb's ng-template projection.
 
 ```typescript
-<ngx-breadcrumb class="ngx-dynamic-breadcrumb">
-  <ng-content let-breadcrumb let-isLast let-breadcrumbs>
-    <a
-    href="typescript:void(0)"
-    *ngIf="!isLast && breadcrumb.isClickable"
-    (click)="navigateTo(breadcrumb.url)"
+<ngx-breadcrumb [breadcrumbTemplate]="template" class="ngx-dynamic-breadcrumb"></ngx-breadcrumb>
+
+<!-- Content Projection -->
+<ng-template #template let-breadcrumb="breadcrumb" let-isLast="isLast let-breadcrumbs="breadcrumbs>
+  <a
+  href="typescript:void(0)"
+  *ngIf="!isLast && breadcrumb.isClickable"
+  (click)="navigateTo(breadcrumb.url)"
+  >
+    {{ breadcrumb.label }}
+  </a>
+  <span
+    *ngIf="isLast || !breadcrumb.isClickable"
+    [ngClass]="{'breadcrumb-item-last': isLast && breadcrumbs.length > 1}"
     >
-      {{ breadcrumb.label }}
-    </a>
-    <span
-      *ngIf="isLast || !breadcrumb.isClickable"
-      [ngClass]="{'breadcrumb-item-last': isLast && breadcrumbs.length > 1}"
-      >
-      {{ breadcrumb.label }}
-    </span>
-  </ng-content>
-</ngx-breadcrumb>
+    {{ breadcrumb.label }}
+  </span>
+</ng-template>
 ```
 
 ## Dynamic Breadcrumbs

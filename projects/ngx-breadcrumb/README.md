@@ -81,11 +81,11 @@ ngOnInit(): void {
   ...
   this.getServiceDetails(this.serviceId).subscribe(repoDetails => {
         ...
-        this.breadcrumbService.editBreadcrumbs({
+        this.breadcrumbService.editBreadcrumbs([{
           key: 'keyToObject',
           newLabel: 'New Label',
           newUrl: 'New URL value (optional)', // Provide this option only when needs to update url.
-        });
+        }]);
   });
   ...
 }
@@ -98,10 +98,10 @@ ngOnInit(): void {
   ...
   this.getServiceDetails(this.serviceId).subscribe(repoDetails => {
         ...
-        this.breadcrumbService.editBreadcrumbs({
+        this.breadcrumbService.editBreadcrumbs([{
           key: 'keyToObject',
           newLabel: null, // this will remove breadcrumb from UI.
-        });
+        }]);
 
   });
   ...

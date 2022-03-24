@@ -8,7 +8,6 @@ import { NgxBreadcrumbService } from './ngx-breadcrumb.service';
 @NgModule({
   declarations: [NgxBreadcrumbComponent],
   imports: [CommonModule, RouterModule],
-  providers: [NgxBreadcrumbService],
   exports: [NgxBreadcrumbComponent],
 })
 export class NgxBreadcrumbModule {

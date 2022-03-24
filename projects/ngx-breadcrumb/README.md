@@ -2,8 +2,15 @@
 
 ## Installation
 
+**npm**
+
 ```shell
 npm install ngx-dynamic-breadcrumb
+```
+
+**yarn**
+```shell
+yarn add ngx-dynamic-breadcrumb
 ```
 
 ### 1. Import the `NgxBreadcrumbModule`
@@ -53,17 +60,19 @@ export const routes: Routes = [
 <ngx-breadcrumb [breadcrumbTemplate]="template" class="ngx-dynamic-breadcrumb"></ngx-breadcrumb>
 
 <!-- Content Projection -->
-<ng-template #template let-breadcrumb="breadcrumb" let-isLast="isLast let-breadcrumbs="breadcrumbs>
+<ng-template #template let-breadcrumb="breadcrumb" let-isLast="isLast let-breadcrumbs="breadcrumbArr">
   <a
   href="typescript:void(0)"
   *ngIf="!isLast && breadcrumb.isClickable"
   (click)="navigateTo(breadcrumb.url)"
+  title="{{breadcrumb.tooltip}}"
   >
     {{ breadcrumb.label }}
   </a>
   <span
     *ngIf="isLast || !breadcrumb.isClickable"
     [ngClass]="{'breadcrumb-item-last': isLast && breadcrumbs.length > 1}"
+    title="{{breadcrumb.tooltip}}"
     >
     {{ breadcrumb.label }}
   </span>

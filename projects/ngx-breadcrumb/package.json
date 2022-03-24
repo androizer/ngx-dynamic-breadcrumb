@@ -1,6 +1,6 @@
 {
   "name": "ngx-dynamic-breadcrumb",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "typings": "ngx-dynamic-breadcrumb.d.ts",
   "peerDependencies": {
     "@angular/common": ">= 9.0.0 < 13.0.0",

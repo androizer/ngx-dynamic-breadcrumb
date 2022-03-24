@@ -35,15 +35,16 @@ export class NgxBreadcrumbService {
     breadcrumbs: IBreadcrumb[] = []
   ): IBreadcrumb[] {
     // If no routeConfig is available we are on the root path
-    let label, key;
+    let label, key, tooltip;
     let isClickable = true;
     const currentBreadcrumb = route.routeConfig?.data?.breadcrumb;
     if (typeof currentBreadcrumb === 'object') {
-      key = currentBreadcrumb?.key;
-      label = currentBreadcrumb?.label;
-      isClickable = currentBreadcrumb?.isClickable ?? isClickable;
+      key = currentBreadcrumb.key;
+      label = currentBreadcrumb.label;
+      isClickable = currentBreadcrumb.isClickable ?? isClickable;
+      tooltip = currentBreadcrumb.tooltip ?? label;
     } else if (typeof currentBreadcrumb === 'string') {
-      key = label = currentBreadcrumb;
+      key = label = tooltip = currentBreadcrumb;
     }
     let path = route.routeConfig?.path ?? '';
 
@@ -62,10 +63,11 @@ export class NgxBreadcrumbService {
 
     const newBreadcrumbs = [...breadcrumbs];
 
-    if (label) {
+    if (key) {
       const breadcrumb: IBreadcrumb = {
         key,
         label,
+        tooltip,
         url: nextUrl,
         isClickable,
       };
@@ -106,6 +108,7 @@ export class NgxBreadcrumbService {
         data.url = Array.isArray(item.newUrl)
           ? item.newUrl.join('/')
           : item.newUrl ?? data.url;
+        data.tooltip = item.tooltip ?? data.tooltip;
       }
     });
     this._breadcrumbChanges.next([...this.breadcrumbs]);

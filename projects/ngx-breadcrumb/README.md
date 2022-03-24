@@ -16,7 +16,7 @@ import { NgModule } from "@angular/core";
 import { NgxBreadcrumbModule } from "ngx-dynamic-breadcrumb";
 
 @NgModule({
-  imports: [BrowserModule, NgxBreadcrumbModule],
+  imports: [BrowserModule, NgxBreadcrumbModule.forRoot()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
@@ -30,7 +30,7 @@ export const routes: Routes = [
     {path: 'login', ..., data: { breadcrumb: 'Login'}},
     {path: 'profile', ..., data: { breadcrumb: {key: 'profile', label: 'Profile'}}},
     {path: 'roles', ..., data: { breadcrumb: 'Roles'}},
-    {path: 'vendors', ..., data: {breadcrumb: {key: 'vendors', label: 'Vendors'}}},
+    {path: 'vendors', ..., data: {breadcrumb: {key: 'vendors', label: 'Vendors', tooltip: 'All Vendors'}}},
         children: [
             {path: ':org', ..., data: { breadcrumb: 'Repo List'}},
             {path: ':repo', ..., data: { breadcrumb: 'Repo'}},

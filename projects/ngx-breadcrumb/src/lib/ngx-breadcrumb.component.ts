@@ -18,21 +18,22 @@ import { IBreadcrumb } from './ngx-breadcrumb.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgxBreadcrumbComponent implements OnInit {
-  constructor(
-    private readonly router: Router,
-    private readonly service: NgxBreadcrumbService
-  ) {}
 
   @Input()
   breadcrumbTemplate: TemplateRef<IBreadcrumb> | null = null;
 
   breadcrumbs$: Observable<IBreadcrumb[]> | null = null;
 
+  constructor(
+    private readonly router: Router,
+    private readonly service: NgxBreadcrumbService
+  ) {}
+
   ngOnInit(): void {
     this.breadcrumbs$ = this.service.breadcrumbChanges;
   }
 
-  navigateTo(path: string) {
+  navigateTo(path: string): void {
     this.router.navigate([path]);
   }
 }

@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { IBreadcrumb, IReplaceBreadcrumb } from './ngx-breadcrumb.types';
 
 @Injectable()
 export class NgxBreadcrumbService {
-  constructor(
-    private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute
-  ) {
-    this._subscribeToRouteEvent();
-  }
+
+
+  /**
+   * Emit change when the breadcrumbs are changed.
+   */
+  readonly breadcrumbChanges: Observable<IBreadcrumb[]>;
 
   private breadcrumbs: IBreadcrumb[] = [];
 
   private readonly _breadcrumbChanges = new BehaviorSubject<IBreadcrumb[]>([]);
 
-  /**
-   * Emit change when the breadcrumbs are changed.
-   */
-  readonly breadcrumbChanges = this._breadcrumbChanges.asObservable();
+  constructor(
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute
+  ) {
+    this.breadcrumbChanges = this._breadcrumbChanges.asObservable();
+    this._subscribeToRouteEvent();
+  }
 
   /**
    * Recursively build breadcrumb according to activated route.
+   *
    * @param route activate route object
    * @param url parent url
    * @param breadcrumbs array of current breadcrumbs
@@ -49,11 +53,11 @@ export class NgxBreadcrumbService {
     let path = route.routeConfig?.path ?? '';
 
     // If the route is dynamic route such as ':id', replace it with actual param values
-    const dynamicRoutes = path!.split('/').filter((el) => el.startsWith(':'));
+    const dynamicRoutes = path.split('/').filter((el) => el.startsWith(':'));
     if (dynamicRoutes.length && !!route.snapshot) {
       dynamicRoutes.forEach((item) => {
         const paramName = item.split(':')[1];
-        path = path!.replace(item, route.snapshot.params[paramName]);
+        path = path.replace(item, route.snapshot.params[paramName]);
       });
     }
 
@@ -86,6 +90,7 @@ export class NgxBreadcrumbService {
 
   /**
    * Returns the latest array of breadcrumbs.
+   *
    * @returns Array of breadcrumbs
    */
   public getBreadcrumbs(): IBreadcrumb[] {
@@ -96,7 +101,8 @@ export class NgxBreadcrumbService {
    * Edit the breadcrumb label and url dynamically.
    * If the label is null while editing, it will act
    * as delete breadcrumb from UI.
-   * @param {Array} crumbs IReplaceBreadcrumb[]
+   *
+   * @param crumbs IReplaceBreadcrumb[]
    */
   editBreadcrumbs(crumbs: IReplaceBreadcrumb[]): void {
     crumbs.forEach((item) => {
@@ -115,7 +121,7 @@ export class NgxBreadcrumbService {
   }
 
   // private functions
-  private _subscribeToRouteEvent() {
+  private _subscribeToRouteEvent(): void {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {

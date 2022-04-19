@@ -1,0 +1,86 @@
+{
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": [
+    "!**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "projects/ngx-breadcrumb/tsconfig.lib.json",
+          "projects/ngx-breadcrumb/tsconfig.spec.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "lib",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "lib",
+            "style": "camelCase"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": false,
+            "allowTypedFunctionExpressions": false,
+            "allowHigherOrderFunctions": false,
+            "allowDirectConstAssertionInArrowFunctions": true,
+            "allowConciseArrowFunctionExpressionsStartingWithVoid": true
+          }
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": [
+          "error",
+          {
+            "allowArgumentsExplicitlyTypedAsAny": true,
+            "allowDirectConstAssertionInArrowFunctions": true,
+            "allowHigherOrderFunctions": false,
+            "allowTypedFunctionExpressions": false
+          }
+        ],
+        "@typescript-eslint/typedef": "error",
+        "dot-notation": "error",
+        "id-denylist": [
+          "error",
+          "any",
+          "Number",
+          "number",
+          "String",
+          "string",
+          "Boolean",
+          "boolean",
+          "Undefined",
+          "undefined"
+        ],
+        "indent": "error",
+        "no-empty-function": "off",
+        "no-shadow": "error",
+        "no-unused-expressions": "error",
+        "no-use-before-define": "off",
+        "quotes": "error",
+        "semi": "error"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "rules": {
+        "@angular-eslint/template/eqeqeq": "error"
+      }
+    }
+  ]
+}

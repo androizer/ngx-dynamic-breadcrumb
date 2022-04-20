@@ -10,7 +10,7 @@ describe('NgxBreadcrumbComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ NgxBreadcrumbComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

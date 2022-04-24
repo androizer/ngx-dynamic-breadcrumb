@@ -9,8 +9,23 @@ npm install ngx-dynamic-breadcrumb
 ```
 
 **yarn**
+
 ```shell
 yarn add ngx-dynamic-breadcrumb
+```
+
+### Platform Version
+
+> For Angular version >= v12
+
+```shell
+npm install ngx-dynamic-breadcrumb@latest
+```
+
+> For Angular version >= 9 & < 12
+
+```shell
+npm install ngx-dynamic-breadcrumb@1.x.x
 ```
 
 ### 1. Import the `NgxBreadcrumbModule`
